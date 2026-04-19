@@ -68,6 +68,8 @@
         .divider::after { right: 0; }
         .divider span { background: white; padding: 0 10px; color: #666; }
         a { color: #4ECDC4; text-decoration: none; cursor: pointer; }
+        
+        /* MODAL - ESTILOS CORRIGIDOS */
         .modal {
             display: none;
             position: fixed;
@@ -81,14 +83,22 @@
         .modal-content {
             background: white;
             max-width: 350px;
+            width: 90%;
             margin: 100px auto;
             padding: 30px;
             border-radius: 20px;
+            position: relative;
         }
         .close {
-            float: right;
+            position: absolute;
+            right: 20px;
+            top: 10px;
             font-size: 28px;
             cursor: pointer;
+            color: #999;
+        }
+        .close:hover {
+            color: #333;
         }
         .status {
             padding: 10px;
@@ -99,6 +109,9 @@
         .status-online { background: #d4edda; color: #155724; }
         .status-offline { background: #f8d7da; color: #721c24; }
         .status-warning { background: #fff3cd; color: #856404; }
+        .error-text { color: #ED4956; font-size: 13px; margin-top: 10px; }
+        .success-text { color: #4ECDC4; font-size: 13px; margin-top: 10px; }
+        .loading-text { color: #856404; font-size: 13px; margin-top: 10px; }
     </style>
 </head>
 <body>
@@ -114,13 +127,14 @@
         
         <div class="divider"><span>ou</span></div>
         
-        <p>Não tem conta? <a onclick="abrirModal()">Cadastre-se</a></p>
+        <p>Não tem conta? <a id="abrirCadastro" style="cursor:pointer">Cadastre-se</a></p>
     </div>
 
-    <div id="modal" class="modal">
+    <!-- MODAL DE CADASTRO -->
+    <div id="modalCadastro" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="fecharModal()">&times;</span>
-            <h2>Cadastre-se</h2>
+            <span class="close" id="fecharModalBtn">&times;</span>
+            <h2 style="margin-bottom: 20px;">Cadastre-se</h2>
             <input type="text" id="nome" placeholder="Nome completo">
             <input type="text" id="username" placeholder="Usuário">
             <input type="email" id="emailCadastro" placeholder="Email">
@@ -132,13 +146,56 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        // CONFIGURAÇÃO
+        // ============================================
+        // CONFIGURAÇÃO DO SUPABASE
+        // ============================================
         const SUPABASE_URL = 'https://roxxzvsqdigilfjygved.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_2_H0O56soizYrDydzKMMJQ_qg0obm8i';
         
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         
-        // Login
+        // ============================================
+        // ELEMENTOS DO DOM
+        // ============================================
+        const modal = document.getElementById('modalCadastro');
+        const abrirBtn = document.getElementById('abrirCadastro');
+        const fecharBtn = document.getElementById('fecharModalBtn');
+        
+        // ============================================
+        // FUNÇÕES DO MODAL
+        // ============================================
+        function abrirModal() {
+            modal.style.display = 'block';
+        }
+        
+        function fecharModal() {
+            modal.style.display = 'none';
+            document.getElementById('resultado').innerHTML = '';
+            document.getElementById('nome').value = '';
+            document.getElementById('username').value = '';
+            document.getElementById('emailCadastro').value = '';
+            document.getElementById('senhaCadastro').value = '';
+        }
+        
+        // Eventos do modal
+        if (abrirBtn) {
+            abrirBtn.onclick = abrirModal;
+        }
+        
+        if (fecharBtn) {
+            fecharBtn.onclick = fecharModal;
+        }
+        
+        // Fechar ao clicar fora
+        window.onclick = function(e) {
+            if (e.target === modal) {
+                fecharModal();
+            }
+        }
+        
+        // ============================================
+        // FUNÇÃO DE LOGIN
+        // ============================================
         async function fazerLogin() {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
@@ -164,11 +221,13 @@
             } else {
                 statusDiv.innerHTML = '✅ Login realizado!';
                 statusDiv.className = 'status status-online';
-                alert('Bem-vindo ao Vizu!');
+                alert('Bem-vindo ao Vizu, ' + data.user.email);
             }
         }
         
-        // Cadastro
+        // ============================================
+        // FUNÇÃO DE CADASTRO
+        // ============================================
         async function fazerCadastro() {
             const nome = document.getElementById('nome').value;
             const username = document.getElementById('username').value;
@@ -177,29 +236,32 @@
             const resultadoDiv = document.getElementById('resultado');
             
             if (!nome || !username || !email || !password) {
-                resultadoDiv.innerHTML = '<span style="color:#ED4956">❌ Preencha todos</span>';
+                resultadoDiv.innerHTML = '<span class="error-text">❌ Preencha todos os campos</span>';
                 return;
             }
             
             if (password.length < 6) {
-                resultadoDiv.innerHTML = '<span style="color:#ED4956">❌ Senha: mínimo 6 caracteres</span>';
+                resultadoDiv.innerHTML = '<span class="error-text">❌ A senha deve ter pelo menos 6 caracteres</span>';
                 return;
             }
             
-            resultadoDiv.innerHTML = '<span style="color:#856404">🔄 Cadastrando...</span>';
+            resultadoDiv.innerHTML = '<span class="loading-text">🔄 Cadastrando...</span>';
             
             const { data, error } = await supabase.auth.signUp({
                 email: email,
                 password: password,
                 options: {
-                    data: { full_name: nome, username: username }
+                    data: { 
+                        full_name: nome, 
+                        username: username 
+                    }
                 }
             });
             
             if (error) {
-                resultadoDiv.innerHTML = '<span style="color:#ED4956">❌ ' + error.message + '</span>';
+                resultadoDiv.innerHTML = '<span class="error-text">❌ ' + error.message + '</span>';
             } else {
-                resultadoDiv.innerHTML = '<span style="color:#155724">✅ Cadastrado! Faça login.</span>';
+                resultadoDiv.innerHTML = '<span class="success-text">✅ Cadastrado com sucesso! Faça login.</span>';
                 setTimeout(() => {
                     fecharModal();
                     document.getElementById('email').value = email;
@@ -207,18 +269,26 @@
             }
         }
         
-        function abrirModal() {
-            document.getElementById('modal').style.display = 'block';
+        // Teste de conexão
+        async function testarConexao() {
+            const statusDiv = document.getElementById('status');
+            try {
+                const { error } = await supabase.from('perfis').select('count', { count: 'exact', head: true });
+                if (error) {
+                    console.log('Erro:', error);
+                } else {
+                    console.log('Conectado!');
+                }
+            } catch(e) {
+                console.log('Erro:', e);
+            }
         }
         
-        function fecharModal() {
-            document.getElementById('modal').style.display = 'none';
-        }
+        testarConexao();
         
-        window.onclick = function(e) {
-            const modal = document.getElementById('modal');
-            if (e.target === modal) fecharModal();
-        }
+        // Tornar funções globais
+        window.fazerLogin = fazerLogin;
+        window.fazerCadastro = fazerCadastro;
     </script>
 </body>
 </html>
