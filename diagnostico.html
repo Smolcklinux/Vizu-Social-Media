@@ -1,71 +1,85 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Diagnóstico Vizu</title>
+    <title>Teste Supabase Direto</title>
     <meta charset="UTF-8">
     <style>
-        body { font-family: monospace; padding: 20px; background: #1e1e1e; color: #fff; }
+        body { font-family: monospace; padding: 20px; background: #121212; color: #fff; }
         .ok { color: #4ECDC4; }
         .error { color: #ED4956; }
-        .test { background: #2a2a2a; padding: 10px; margin: 10px 0; border-radius: 5px; }
-        button { background: #4ECDC4; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-top: 20px; }
-        input { padding: 8px; margin: 5px; border-radius: 5px; border: none; }
+        .box { background: #1e1e1e; padding: 20px; border-radius: 10px; margin: 10px 0; }
     </style>
 </head>
 <body>
-    <h1>🔧 Diagnóstico do Vizu</h1>
-    <div id="results"></div>
-
-    <!-- SCRIPTS NA ORDEM CORRETA -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/config.js"></script>
-    <script src="js/cloudinary-config.js"></script>
+    <h1>Teste Supabase - Versão Direta</h1>
     
-    <script>
-        const results = document.getElementById('results');
-        
-        function log(message, isError = false) {
-            const div = document.createElement('div');
-            div.className = 'test';
-            div.innerHTML = isError ? `<span class="error">❌ ${message}</span>` : `<span class="ok">✅ ${message}</span>`;
-            results.appendChild(div);
-        }
+    <div class="box" id="resultado">
+        ⏳ Testando conexão...
+    </div>
+    
+    <div class="box">
+        <h3>Cadastro Rápido</h3>
+        <input type="text" id="user" placeholder="Usuário" style="padding: 10px; margin: 5px; width: 200px;">
+        <input type="email" id="mail" placeholder="Email" style="padding: 10px; margin: 5px; width: 200px;">
+        <input type="password" id="pass" placeholder="Senha" style="padding: 10px; margin: 5px; width: 200px;">
+        <button onclick="cadastrar()" style="background: #4ECDC4; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Cadastrar</button>
+        <div id="msg"></div>
+    </div>
 
-        async function runDiagnostic() {
-            results.innerHTML = '';
-            log('Iniciando diagnóstico...');
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // Configuração direta
+        const SUPABASE_URL = 'https://roxxzvsqdigilfjygved.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_vHOFMn7VUPl37vNFDIRxnw_G4p2Z8SW';
+        
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        const resultado = document.getElementById('resultado');
+        
+        async function testar() {
+            resultado.innerHTML = '⏳ Testando...';
             
-            // 1. Verificar se supabaseClient existe
-            if (typeof window.supabaseClient !== 'undefined') {
-                log('supabaseClient carregado com sucesso!');
+            try {
+                const { data, error } = await supabase.from('perfis').select('count', { count: 'exact', head: true });
                 
-                // 2. Testar conexão
-                try {
-                    const { data, error } = await window.supabaseClient.from('perfis').select('count', { count: 'exact', head: true });
-                    if (error) {
-                        log(`Supabase: ${error.message}`, true);
-                    } else {
-                        log(`Supabase conectado com sucesso!`);
-                    }
-                } catch(e) {
-                    log(`Erro na consulta: ${e.message}`, true);
+                if (error) {
+                    resultado.innerHTML = `<span class="error">❌ Erro: ${error.message}</span>`;
+                } else {
+                    resultado.innerHTML = '<span class="ok">✅ Supabase CONECTADO com sucesso!</span>';
                 }
-            } else {
-                log('supabaseClient NÃO foi carregado!', true);
-                log('Verifique se o arquivo js/config.js tem a linha: window.supabaseClient = supabase;', true);
+            } catch(e) {
+                resultado.innerHTML = `<span class="error">❌ Erro: ${e.message}</span>`;
             }
-            
-            // 3. Testar Cloudinary
-            if (window.cloudinary && window.cloudinary.cloudName) {
-                log(`Cloudinary configurado: ${window.cloudinary.cloudName}`);
-            } else {
-                log('Cloudinary NÃO configurado', true);
-            }
-            
-            log('Diagnóstico finalizado!');
         }
         
-        runDiagnostic();
+        async function cadastrar() {
+            const username = document.getElementById('user').value;
+            const email = document.getElementById('mail').value;
+            const password = document.getElementById('pass').value;
+            const msg = document.getElementById('msg');
+            
+            if (!username || !email || !password) {
+                msg.innerHTML = '<span class="error">Preencha todos os campos</span>';
+                return;
+            }
+            
+            msg.innerHTML = '⏳ Cadastrando...';
+            
+            const { data, error } = await supabase.auth.signUp({
+                email: email,
+                password: password,
+                options: {
+                    data: { full_name: username, username: username }
+                }
+            });
+            
+            if (error) {
+                msg.innerHTML = `<span class="error">❌ ${error.message}</span>`;
+            } else {
+                msg.innerHTML = '<span class="ok">✅ Cadastro realizado! Agora faça login.</span>';
+            }
+        }
+        
+        testar();
     </script>
 </body>
 </html>
