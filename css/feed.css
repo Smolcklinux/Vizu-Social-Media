@@ -1,0 +1,624 @@
+/* ============================================
+   VIZU - ESTILOS DO FEED PRINCIPAL
+   ============================================ */
+
+/* RESET E BASE */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background: #fafafa;
+    padding-bottom: 70px;
+}
+
+/* ========== HEADER FIXO ========== */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    border-bottom: 1px solid #dbdbdb;
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+}
+
+.header-left i, .header-right i {
+    font-size: 24px;
+    margin: 0 4px;
+    color: #262626;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.header-left i:hover, .header-right i:hover {
+    color: #4ECDC4;
+}
+
+.header-center {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.header-logo {
+    width: 30px;
+    height: 30px;
+}
+
+.header-center h1 {
+    font-size: 24px;
+    background: linear-gradient(135deg, #FF6B6B, #4ECDC4, #9B59B6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* ========== STORIES ========== */
+.stories-container {
+    margin-top: 70px;
+    background: white;
+    border-bottom: 1px solid #dbdbdb;
+    padding: 16px;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: thin;
+}
+
+.stories-container::-webkit-scrollbar {
+    height: 3px;
+}
+
+.stories-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.stories-container::-webkit-scrollbar-thumb {
+    background: #4ECDC4;
+    border-radius: 3px;
+}
+
+.stories-wrapper {
+    display: inline-flex;
+    gap: 20px;
+}
+
+.story-item {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.story-item:active {
+    transform: scale(0.95);
+}
+
+.story-ring {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, #FF6B6B, #4ECDC4, #9B59B6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.story-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.story-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.story-avatar i {
+    font-size: 30px;
+    color: #4ECDC4;
+}
+
+.add-story .story-avatar {
+    background: #f0f0f0;
+    color: #4ECDC4;
+    font-size: 30px;
+}
+
+.story-item span {
+    font-size: 12px;
+    color: #262626;
+    max-width: 70px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ========== FEED DE POSTS ========== */
+.feed-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+/* CARD DO POST */
+.post-card {
+    background: white;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.post-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* CABEÇALHO DO POST */
+.post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+}
+
+.post-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.post-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #4ECDC4;
+    padding: 1px;
+}
+
+.post-username {
+    font-weight: 600;
+    color: #262626;
+    font-size: 14px;
+}
+
+.post-time {
+    font-size: 11px;
+    color: #8e8e8e;
+    margin-left: 5px;
+}
+
+.post-more {
+    cursor: pointer;
+    font-size: 20px;
+    color: #262626;
+    padding: 8px;
+}
+
+/* IMAGEM DO POST */
+.post-image {
+    width: 100%;
+    max-height: 600px;
+    object-fit: cover;
+    cursor: pointer;
+    background: #f0f0f0;
+}
+
+/* AÇÕES DO POST */
+.post-actions {
+    padding: 8px 16px;
+    display: flex;
+    gap: 20px;
+}
+
+.action-btn {
+    font-size: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #262626;
+    transition: transform 0.2s;
+    padding: 8px;
+}
+
+.action-btn:active {
+    transform: scale(0.9);
+}
+
+.action-btn.liked i {
+    color: #ed4956;
+    animation: heartBeat 0.3s;
+}
+
+@keyframes heartBeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+}
+
+/* CURTIDAS */
+.post-likes {
+    padding: 0 16px;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 8px;
+    cursor: pointer;
+}
+
+/* LEGENDA */
+.post-caption {
+    padding: 0 16px;
+    font-size: 14px;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.post-caption strong {
+    font-weight: 600;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+/* COMENTÁRIOS */
+.post-comments {
+    padding: 0 16px 12px;
+    color: #8e8e8e;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.post-comments:hover {
+    color: #4ECDC4;
+}
+
+/* ========== LOADING ========== */
+.loading-spinner {
+    text-align: center;
+    padding: 50px;
+    color: #4ECDC4;
+}
+
+.loading-spinner i {
+    font-size: 40px;
+}
+
+/* ========== FEED VAZIO ========== */
+.empty-feed {
+    text-align: center;
+    padding: 60px 20px;
+    background: white;
+    border-radius: 12px;
+    margin: 20px;
+}
+
+.empty-feed i {
+    font-size: 64px;
+    color: #4ECDC4;
+    margin-bottom: 20px;
+}
+
+.empty-feed h3 {
+    font-size: 22px;
+    color: #262626;
+    margin-bottom: 10px;
+}
+
+.empty-feed p {
+    color: #8e8e8e;
+    margin-bottom: 20px;
+}
+
+.btn-create-first {
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #4ECDC4, #9B59B6);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* ========== MODAL DE POST ========== */
+.post-modal {
+    max-width: 500px;
+}
+
+.post-options {
+    display: flex;
+    gap: 15px;
+    padding: 20px;
+}
+
+.post-option-btn {
+    flex: 1;
+    padding: 12px;
+    background: #f0f0f0;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s;
+}
+
+.post-option-btn i {
+    margin-right: 8px;
+}
+
+.post-option-btn:hover {
+    background: #e0e0e0;
+}
+
+#postCaption {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-top: 1px solid #dbdbdb;
+    border-bottom: 1px solid #dbdbdb;
+    outline: none;
+    font-family: inherit;
+    resize: none;
+    font-size: 14px;
+}
+
+.btn-submit-post {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #4ECDC4, #9B59B6);
+    color: white;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.btn-submit-post:hover {
+    opacity: 0.9;
+}
+
+/* ========== MODAL DE COMENTÁRIOS ========== */
+.comments-modal {
+    max-width: 500px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.comments-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    max-height: 400px;
+}
+
+.comment-item {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding: 8px;
+    border-radius: 8px;
+    background: #fafafa;
+}
+
+.comment-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.comment-content {
+    flex: 1;
+}
+
+.comment-username {
+    font-weight: 600;
+    font-size: 13px;
+    color: #262626;
+}
+
+.comment-text {
+    font-size: 13px;
+    margin-top: 4px;
+    color: #262626;
+    word-break: break-word;
+}
+
+.comment-time {
+    font-size: 11px;
+    color: #8e8e8e;
+    margin-top: 4px;
+}
+
+.no-comments {
+    text-align: center;
+    padding: 40px;
+    color: #8e8e8e;
+}
+
+.no-comments i {
+    font-size: 48px;
+    margin-bottom: 10px;
+}
+
+.add-comment {
+    display: flex;
+    padding: 16px;
+    border-top: 1px solid #dbdbdb;
+    gap: 10px;
+    background: white;
+}
+
+.add-comment input {
+    flex: 1;
+    padding: 8px;
+    border: none;
+    outline: none;
+    font-size: 14px;
+}
+
+.add-comment button {
+    background: none;
+    border: none;
+    color: #4ECDC4;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.add-comment button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ========== BARRA DE NAVEGAÇÃO INFERIOR ========== */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    border-top: 1px solid #dbdbdb;
+    display: flex;
+    justify-content: space-around;
+    padding: 8px 0;
+    z-index: 100;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    padding: 4px 12px;
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+
+.nav-item i {
+    font-size: 24px;
+    color: #262626;
+}
+
+.nav-item span {
+    font-size: 11px;
+    color: #8e8e8e;
+}
+
+.nav-item.active i,
+.nav-item.active span {
+    color: #4ECDC4;
+}
+
+.nav-item:active {
+    background: #f0f0f0;
+}
+
+/* ========== RESPONSIVIDADE ========== */
+@media (max-width: 768px) {
+    .feed-container {
+        padding: 0;
+    }
+    
+    .post-card {
+        border-radius: 0;
+        margin-bottom: 10px;
+    }
+    
+    .modal-content {
+        margin: 20px;
+        width: calc(100% - 40px);
+    }
+    
+    .story-ring {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .story-avatar {
+        width: 54px;
+        height: 54px;
+    }
+    
+    .story-item span {
+        font-size: 10px;
+    }
+}
+
+@media (min-width: 768px) {
+    .feed-container {
+        margin: 0 auto;
+    }
+    
+    .post-card {
+        margin-bottom: 30px;
+    }
+}
+
+/* ========== ANIMAÇÕES ========== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.post-card {
+    animation: fadeIn 0.3s ease;
+}
+
+/* ========== DARK MODE ========== */
+body.dark-theme {
+    background: #121212;
+}
+
+body.dark-theme .header,
+body.dark-theme .stories-container,
+body.dark-theme .post-card,
+body.dark-theme .bottom-nav,
+body.dark-theme .modal-content {
+    background: #1e1e1e;
+    border-color: #2a2a2a;
+}
+
+body.dark-theme .header-left i,
+body.dark-theme .header-right i,
+body.dark-theme .post-username,
+body.dark-theme .post-caption,
+body.dark-theme .action-btn,
+body.dark-theme .nav-item i,
+body.dark-theme .post-likes {
+    color: #e0e0e0;
+}
+
+body.dark-theme .post-time,
+body.dark-theme .post-comments {
+    color: #8e8e8e;
+}
+
+body.dark-theme .comment-item {
+    background: #2a2a2a;
+}
+
+body.dark-theme .add-comment {
+    background: #1e1e1e;
+    border-color: #2a2a2a;
+}

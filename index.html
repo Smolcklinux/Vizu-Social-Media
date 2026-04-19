@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#4ECDC4">
+    <meta name="description" content="Vizu - Rede social para mostrar seu visual ao mundo">
+    <title>Vizu - Mostre seu visual ao mundo</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="logo-wrapper">
+                <img src="assets/images/logo.svg" alt="Vizu" class="logo-animated">
+                <h1 class="logo-text">VIZU</h1>
+                <p class="slogan">Mostre seu visual ao mundo</p>
+            </div>
+
+            <form id="loginForm">
+                <div class="input-group">
+                    <input type="text" id="username" placeholder="Telefone, email ou nome de usuário" required autocomplete="username">
+                </div>
+                <div class="input-group">
+                    <input type="password" id="password" placeholder="Senha" required autocomplete="current-password">
+                </div>
+                <button type="submit" class="btn-login">Entrar</button>
+            </form>
+
+            <div class="divider">
+                <span>ou</span>
+            </div>
+
+            <button id="fbLogin" class="btn-facebook">
+                <span>📘</span> Continuar com Facebook
+            </button>
+
+            <a href="#" class="forgot-password" id="forgotPassword">Esqueceu a senha?</a>
+
+            <div class="signup-prompt">
+                <p>Não tem uma conta? <a href="#" id="showSignup">Cadastre-se</a></p>
+            </div>
+        </div>
+
+        <!-- Modal de Cadastro -->
+        <div id="signupModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Cadastre-se no Vizu</h2>
+                    <span class="close">&times;</span>
+                </div>
+                <form id="signupForm">
+                    <input type="text" placeholder="Nome completo" required>
+                    <input type="text" placeholder="Nome de usuário" required>
+                    <input type="email" placeholder="Email" required>
+                    <input type="password" placeholder="Senha" required>
+                    <button type="submit" class="btn-signup">Cadastrar</button>
+                </form>
+                <p class="terms">
+                    Ao se cadastrar, você concorda com nossos 
+                    <a href="#">Termos</a>, 
+                    <a href="#">Política de Privacidade</a> e 
+                    <a href="#">Política de Cookies</a>.
+                </p>
+            </div>
+        </div>
+
+        <!-- Modal de Recuperar Senha -->
+        <div id="resetModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Redefinir senha</h3>
+                    <span class="close-reset">&times;</span>
+                </div>
+                <p>Enviaremos um link para seu email redefinir a senha.</p>
+                <input type="email" id="resetEmail" placeholder="Seu email">
+                <button id="sendResetLink" class="btn-login">Enviar link</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>

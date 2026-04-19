@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#4ECDC4">
+    <title>Vizu - Mensagens</title>
+    <link rel="stylesheet" href="css/mensagens.css">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
+</head>
+<body>
+    <header class="header">
+        <div class="header-left">
+            <i class="fas fa-arrow-left" id="backButton"></i>
+        </div>
+        <div class="header-center">
+            <h1>Mensagens</h1>
+        </div>
+        <div class="header-right">
+            <i class="fas fa-edit" id="newMessageBtn"></i>
+        </div>
+    </header>
+
+    <div class="messages-container">
+        <!-- Lista de Conversas -->
+        <div class="conversations-list" id="conversationsList">
+            <div class="loading-conversations">
+                <i class="fas fa-spinner fa-pulse"></i>
+                Carregando conversas...
+            </div>
+        </div>
+
+        <!-- Área do Chat (Desktop/Tablet) -->
+        <div class="chat-area" id="chatArea" style="display: none;">
+            <div class="chat-header" id="chatHeader">
+                <img id="chatAvatar" src="" alt="Avatar">
+                <div class="chat-user-info">
+                    <h3 id="chatUsername"></h3>
+                    <span id="chatStatus">Online</span>
+                </div>
+                <div class="chat-actions">
+                    <i class="fas fa-phone"></i>
+                    <i class="fas fa-video"></i>
+                    <i class="fas fa-info-circle"></i>
+                </div>
+            </div>
+
+            <div class="chat-messages" id="chatMessages">
+                <!-- Mensagens aparecem aqui -->
+            </div>
+
+            <div class="chat-input-area">
+                <div class="chat-input-wrapper">
+                    <button class="attach-btn" id="attachBtn">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                    <input type="text" id="messageInput" placeholder="Digite uma mensagem...">
+                    <button class="send-btn" id="sendMessageBtn">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mensagem de seleção (Mobile) -->
+        <div class="no-chat-selected" id="noChatSelected">
+            <i class="fas fa-comment-dots"></i>
+            <h3>Selecione uma conversa</h3>
+            <p>Escolha um amigo para começar a conversar</p>
+        </div>
+    </div>
+
+    <!-- Modal Nova Conversa -->
+    <div id="newChatModal" class="modal">
+        <div class="modal-content new-chat-modal">
+            <div class="modal-header">
+                <h3>Nova mensagem</h3>
+                <span class="close-newchat">&times;</span>
+            </div>
+            <div class="search-users">
+                <input type="text" id="searchUsersInput" placeholder="Pesquisar usuários...">
+            </div>
+            <div id="usersList" class="users-list"></div>
+        </div>
+    </div>
+
+    <!-- Modal de Mídia (foto/vídeo) -->
+    <div id="mediaModal" class="modal">
+        <div class="modal-content media-modal">
+            <div class="modal-header">
+                <h3>Enviar mídia</h3>
+                <span class="close-media">&times;</span>
+            </div>
+            <div class="media-options">
+                <button id="uploadPhotoMsg">
+                    <i class="fas fa-image"></i> Foto
+                </button>
+                <button id="takePhotoMsg">
+                    <i class="fas fa-camera"></i> Câmera
+                </button>
+            </div>
+            <input type="file" id="mediaUpload" accept="image/*,video/*" style="display:none">
+            <div id="mediaPreview" class="media-preview"></div>
+            <button id="sendMediaBtn" class="btn-send-media">Enviar</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/config.js"></script>
+    <script src="js/cloudinary-config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/mensagens.js"></script>
+</body>
+</html>

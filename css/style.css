@@ -1,0 +1,391 @@
+/* ============================================
+   VIZU - ESTILOS DA PÁGINA DE LOGIN
+   ============================================ */
+
+/* RESET GLOBAL - Remove estilos padrão do navegador */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ESTILOS DO BODY */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* CONTAINER PRINCIPAL DO LOGIN */
+.login-container {
+    width: 100%;
+    padding: 20px;
+}
+
+/* CARD BRANCO DO FORMULÁRIO */
+.login-card {
+    background: white;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 40px 30px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    text-align: center;
+    animation: fadeInUp 0.5s ease;
+}
+
+/* ANIMAÇÃO DE ENTRADA */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========== LOGO ========== */
+.logo-wrapper {
+    margin-bottom: 30px;
+}
+
+.logo-animated {
+    width: 80px;
+    height: 80px;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.logo-text {
+    font-size: 48px;
+    background: linear-gradient(135deg, #FF6B6B, #4ECDC4, #9B59B6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-top: 10px;
+    letter-spacing: -1px;
+}
+
+.slogan {
+    color: #666;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+/* ========== CAMPOS DO FORMULÁRIO ========== */
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s;
+    background: #fafafa;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #4ECDC4;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(78,205,196,0.1);
+}
+
+/* ========== BOTÃO DE LOGIN ========== */
+.btn-login {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #4ECDC4, #9B59B6);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 10px;
+}
+
+.btn-login:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(78,205,196,0.3);
+}
+
+.btn-login:active {
+    transform: translateY(0);
+}
+
+.btn-login:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* ========== DIVISOR "OU" ========== */
+.divider {
+    margin: 20px 0;
+    position: relative;
+    text-align: center;
+}
+
+.divider::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 45%;
+    height: 1px;
+    background: #ddd;
+}
+
+.divider::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    width: 45%;
+    height: 1px;
+    background: #ddd;
+}
+
+.divider span {
+    background: white;
+    padding: 0 10px;
+    color: #666;
+    font-size: 13px;
+}
+
+/* ========== BOTÃO FACEBOOK ========== */
+.btn-facebook {
+    width: 100%;
+    padding: 12px;
+    background: #1877f2;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 15px;
+    transition: background 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn-facebook:hover {
+    background: #166fe5;
+}
+
+/* ========== LINKS ========== */
+.forgot-password {
+    display: block;
+    color: #4ECDC4;
+    text-decoration: none;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+.signup-prompt p {
+    color: #666;
+    font-size: 14px;
+}
+
+.signup-prompt a {
+    color: #4ECDC4;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.signup-prompt a:hover {
+    text-decoration: underline;
+}
+
+/* ========== BOTÃO DE CADASTRO ========== */
+.btn-signup {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #4ECDC4, #9B59B6);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+/* ========== MODAL (POPUP) ========== */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    overflow-y: auto;
+}
+
+.modal-content {
+    background: white;
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 30px;
+    border-radius: 20px;
+    animation: slideIn 0.3s;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.modal-header h2, .modal-header h3 {
+    font-size: 20px;
+    color: #262626;
+}
+
+.close, .close-reset {
+    font-size: 28px;
+    cursor: pointer;
+    color: #999;
+    transition: color 0.3s;
+}
+
+.close:hover, .close-reset:hover {
+    color: #262626;
+}
+
+/* ========== FORMULÁRIO DE CADASTRO ========== */
+#signupForm input {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+#signupForm input:focus {
+    outline: none;
+    border-color: #4ECDC4;
+}
+
+.terms {
+    font-size: 12px;
+    color: #8e8e8e;
+    margin-top: 20px;
+    text-align: center;
+    line-height: 1.5;
+}
+
+.terms a {
+    color: #4ECDC4;
+    text-decoration: none;
+}
+
+.terms a:hover {
+    text-decoration: underline;
+}
+
+/* ========== MODAL DE RECUPERAR SENHA ========== */
+#resetModal .modal-content p {
+    color: #666;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#resetEmail {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+/* ========== RESPONSIVIDADE ========== */
+@media (max-width: 480px) {
+    .login-card {
+        padding: 30px 20px;
+    }
+    
+    .logo-text {
+        font-size: 36px;
+    }
+    
+    .logo-animated {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .modal-content {
+        margin: 20px;
+        width: calc(100% - 40px);
+        padding: 20px;
+    }
+}
+
+/* ========== DARK MODE (PREPARAÇÃO) ========== */
+@media (prefers-color-scheme: dark) {
+    body.dark-theme {
+        background: linear-gradient(135deg, #1a1a2e, #16213e);
+    }
+    
+    body.dark-theme .login-card {
+        background: #1e1e2e;
+        color: white;
+    }
+    
+    body.dark-theme .input-group input {
+        background: #2a2a3e;
+        border-color: #3a3a4e;
+        color: white;
+    }
+    
+    body.dark-theme .divider span {
+        background: #1e1e2e;
+        color: #aaa;
+    }
+    
+    body.dark-theme .signup-prompt p {
+        color: #aaa;
+    }
+    
+    body.dark-theme .modal-content {
+        background: #1e1e2e;
+        color: white;
+    }
+}

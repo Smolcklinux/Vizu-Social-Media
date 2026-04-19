@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#4ECDC4">
+    <title>Vizu - Configurações</title>
+    <link rel="stylesheet" href="css/config.css">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
+</head>
+<body>
+    <header class="header">
+        <div class="header-left">
+            <i class="fas fa-arrow-left" id="backButton"></i>
+        </div>
+        <div class="header-center">
+            <h1>Configurações</h1>
+        </div>
+        <div class="header-right">
+            <i class="fas fa-check" id="saveSettings" style="display: none;">Salvar</i>
+        </div>
+    </header>
+
+    <div class="settings-container">
+        <!-- Seção de Conta -->
+        <div class="settings-section">
+            <div class="section-header">
+                <i class="fas fa-user-circle"></i>
+                <h2>Conta</h2>
+            </div>
+            <div class="settings-item" id="editProfileSettings">
+                <div class="item-icon"><i class="fas fa-user-edit"></i></div>
+                <div class="item-info">
+                    <span class="item-title">Editar perfil</span>
+                    <span class="item-subtitle">Altere sua foto, nome e bio</span>
+                </div>
+                <i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="settings-item" id="changePasswordSettings">
+                <div class="item-icon"><i class="fas fa-lock"></i></div>
+                <div class="item-info">
+                    <span class="item-title">Alterar senha</span>
+                    <span class="item-subtitle">Mantenha sua conta segura</span>
+                </div>
+                <i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="settings-item" id="emailSettings">
+                <div class="item-icon"><i class="fas fa-envelope"></i></div>
+                <div class="item-info">
+                    <span class="item-title">Email e SMS</span>
+                    <span class="item-subtitle">Preferências de contato</span>
+                </div>
+                <i class="fas fa-chevron-right"></i>
+            </div>
+        </div>
+
+        <!-- Seção de Privacidade -->
+        <div class="settings-section">
+            <div class="section-header">
+                <i class="fas fa-shield-alt"></i>
+                <h2>Privacidade</h2>
+            </div>
+            <div class="settings-item" id="privacySettings">
+                <div class="item-icon"><i class="fas fa-eye"></i></div>
+                <div class="item-info">
+                    <span class="item-title">Privacidade da conta</span>
+                    <span class="item-subtitle">Quem pode ver seu conteúdo</span>
+                </div>
+                <i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="settings-item" id="blockedSettings">
+                <div class="item-icon"><i class="fas fa-ban"></i></div>
+                <div class="item-info">
+                    <span class="item-title">Usuários bloqueados</span>
+                    <span class="item-subtitle">Gerencie bloqueios</span>
+                </div>
+                <i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="settings-item" id="mutedSettings">
+                <div class="item-icon"><i class="fas fa-volume-mute"></i></div>
+                <div class="item-info">
+                    <span class="item-title">Silenciados</span>
+                    <span class="item-subtitle">Contas silenciadas</span>
+                </div>
+                <i class="fas fa-chevron-right"></i>
+            </div>
+        </div>
+
+        <!-- Seção de Notificações -->
+        <div class="settings-section">
+            <div class="section-header">
+                <i class="fas fa-bell"></i>
+                <h2>Notificações</h2>
+            </div>
+            <div class="settings-item toggle-item">
+                <div class="item-icon"><i class="fas fa-heart"></i></div>
+                <div class="item-info">
+                    <span class="item-title">Curtidas</span>
+                    <span class="item-subtitle">Receber notificações de curtidas</span>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="notifyLikes" checked>
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            <div class="settings-item toggle-item">
+                <div class="item-icon"><i class="fas fa-comment"></i></div>
+                <div class="item-info">
+                    <span class="item-title">Comentários</span>
+                    <span class="item-subtitle">Receber notificações de comentários</span>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="notifyComments" checked>
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            <div class="settings-item toggle-item">
+                <div class="item-icon"><i class="fas fa-user-plus"></i></div>
+                <div class="item-info">
+                    <span class="item-title">Novos seguidores</span>
+                    <span class="item-subtitle">Receber notificações de novos seguidores</span>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="notifyFollowers" checked>
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Seção de Aparência -->
+        <div class="settings-section">
+            <div class="section-header">
+                <i class="fas fa-palette"></i>
+                <h2>Aparência</h2>
+            </div>
+            <div class="settings-item" id="themeSettings">
+                <div class="item-icon"><i class="fas fa-moon"></i></div>
+                <div class="item-info">
+                    <span class="item-title">Tema</span>
+                    <span class="item-subtitle">Claro / Escuro / Sistema</span>
+                </div>
+                <span class="item-value" id="themeValue">Claro</span>
+                <i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="settings-item" id="fontSettings">
+                <div class="item-icon"><i class="fas fa-text-height"></i></div>
+                <div class="item-info">
+                    <span class="item-title">Tamanho da fonte</span>
+                    <span class="item-subtitle">Ajuste o tamanho do texto</span>
+                </div>
+                <span class="item-value" id="fontValue">Médio</span>
+                <i class="fas fa-chevron-right"></i>
+            </div>
+        </div>
+
+        <!-- Seção de Suporte -->
+        <div class="settings-section">
+            <div class="section-header">
+                <i class="fas fa-question-circle"></i>
+                <h2>Suporte</h2>
+            </div>
+            <div class="settings-item" id="helpSettings">
+                <div class="item-icon"><i class="fas fa-life-ring"></i></div>
+                <div class="item-info">
+                    <span class="item-title">Central de ajuda</span>
+                    <span class="item-subtitle">Dúvidas e suporte</span>
+                </div>
+                <i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="settings-item" id="reportSettings">
+                <div class="item-icon"><i class="fas fa-flag"></i></div>
+                <div class="item-info">
+                    <span class="item-title">Reportar um problema</span>
+                    <span class="item-subtitle">Conte-nos o que aconteceu</span>
+                </div>
+                <i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="settings-item" id="aboutSettings">
+                <div class="item-icon"><i class="fas fa-info-circle"></i></div>
+                <div class="item-info">
+                    <span class="item-title">Sobre o Vizu</span>
+                    <span class="item-subtitle">Versão 1.0.0</span>
+                </div>
+                <i class="fas fa-chevron-right"></i>
+            </div>
+        </div>
+
+        <!-- Botão de Logout -->
+        <div class="logout-container">
+            <button id="logoutButton" class="btn-logout">
+                <i class="fas fa-sign-out-alt"></i>
+                Sair da conta
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal Alterar Senha -->
+    <div id="changePasswordModal" class="modal">
+        <div class="modal-content change-password-modal">
+            <div class="modal-header">
+                <h3>Alterar senha</h3>
+                <span class="close-password">&times;</span>
+            </div>
+            <form id="changePasswordForm">
+                <input type="password" id="currentPassword" placeholder="Senha atual" required>
+                <input type="password" id="newPassword" placeholder="Nova senha" required>
+                <input type="password" id="confirmPassword" placeholder="Confirmar nova senha" required>
+                <button type="submit" class="btn-change-password">Alterar senha</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Tema -->
+    <div id="themeModal" class="modal">
+        <div class="modal-content theme-modal">
+            <div class="modal-header">
+                <h3>Escolher tema</h3>
+                <span class="close-theme">&times;</span>
+            </div>
+            <div class="theme-options">
+                <div class="theme-option" data-theme="light">
+                    <i class="fas fa-sun"></i>
+                    <span>Claro</span>
+                </div>
+                <div class="theme-option" data-theme="dark">
+                    <i class="fas fa-moon"></i>
+                    <span>Escuro</span>
+                </div>
+                <div class="theme-option" data-theme="system">
+                    <i class="fas fa-desktop"></i>
+                    <span>Sistema</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/config-settings.js"></script>
+</body>
+</html>

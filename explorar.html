@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#4ECDC4">
+    <title>Vizu - Explorar</title>
+    <link rel="stylesheet" href="css/explorar.css">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
+</head>
+<body>
+    <header class="header">
+        <div class="header-left">
+            <i class="fas fa-arrow-left" id="backButton"></i>
+        </div>
+        <div class="header-center">
+            <h1>Explorar</h1>
+        </div>
+        <div class="header-right">
+            <i class="fas fa-search" id="searchButton"></i>
+        </div>
+    </header>
+
+    <!-- Barra de Pesquisa -->
+    <div class="search-bar" id="searchBar" style="display: none;">
+        <div class="search-input-wrapper">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" placeholder="Pesquisar usuários...">
+            <i class="fas fa-times" id="clearSearch"></i>
+        </div>
+    </div>
+
+    <!-- Categorias -->
+    <div class="categories">
+        <div class="category active" data-category="all">
+            <i class="fas fa-fire"></i>
+            <span>Para você</span>
+        </div>
+        <div class="category" data-category="trending">
+            <i class="fas fa-chart-line"></i>
+            <span>Trending</span>
+        </div>
+        <div class="category" data-category="recent">
+            <i class="fas fa-clock"></i>
+            <span>Recentes</span>
+        </div>
+        <div class="category" data-category="following">
+            <i class="fas fa-users"></i>
+            <span>Seguindo</span>
+        </div>
+    </div>
+
+    <!-- Grid de Posts (estilo Pinterest) -->
+    <div class="explore-grid" id="exploreGrid">
+        <div class="loading-grid">
+            <i class="fas fa-spinner fa-pulse"></i>
+            Carregando...
+        </div>
+    </div>
+
+    <!-- Modal de Post Rápido -->
+    <div id="quickPostModal" class="modal">
+        <div class="modal-content quick-post-modal">
+            <div class="modal-header">
+                <h3>Publicação</h3>
+                <span class="close-quick">&times;</span>
+            </div>
+            <img id="quickPostImage" src="" alt="Post">
+            <div class="quick-post-info">
+                <div class="quick-post-user">
+                    <img id="quickPostAvatar" src="" alt="Avatar">
+                    <span id="quickPostUsername"></span>
+                </div>
+                <div class="quick-post-stats">
+                    <span><i class="fas fa-heart"></i> <span id="quickPostLikes">0</span></span>
+                    <span><i class="fas fa-comment"></i> <span id="quickPostComments">0</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <nav class="bottom-nav">
+        <div class="nav-item" data-page="feed">
+            <i class="fas fa-home"></i>
+            <span>Início</span>
+        </div>
+        <div class="nav-item active" data-page="search">
+            <i class="fas fa-search"></i>
+            <span>Explorar</span>
+        </div>
+        <div class="nav-item" data-page="reels">
+            <i class="fas fa-play-circle"></i>
+            <span>Reels</span>
+        </div>
+        <div class="nav-item" data-page="profile">
+            <i class="fas fa-user"></i>
+            <span>Perfil</span>
+        </div>
+    </nav>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/explorar.js"></script>
+</body>
+</html>

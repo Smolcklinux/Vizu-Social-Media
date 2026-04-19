@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF6B6B" />
+      <stop offset="50%" style="stop-color:#4ECDC4" />
+      <stop offset="100%" style="stop-color:#9B59B6" />
+    </linearGradient>
+    <linearGradient id="gradientDark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF8E8E" />
+      <stop offset="50%" style="stop-color:#6EE7DE" />
+      <stop offset="100%" style="stop-color:#B87ED6" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Fundo circular -->
+  <circle cx="100" cy="100" r="95" fill="url(#gradient)" opacity="0.1" />
+  
+  <!-- Anel externo -->
+  <circle cx="100" cy="100" r="80" fill="none" stroke="url(#gradient)" stroke-width="4" />
+  
+  <!-- Ícone da câmera estilizada -->
+  <g transform="translate(100, 85)">
+    <!-- Corpo da câmera -->
+    <rect x="-30" y="-15" width="60" height="45" rx="8" fill="url(#gradient)" />
+    
+    <!-- Lente principal -->
+    <circle cx="0" cy="5" r="18" fill="white" />
+    <circle cx="0" cy="5" r="14" fill="url(#gradient)" />
+    <circle cx="0" cy="5" r="8" fill="white" />
+    
+    <!-- Flash -->
+    <circle cx="18" cy="-8" r="4" fill="white" />
+    
+    <!-- Botão do obturador -->
+    <rect x="15" y="-22" width="10" height="7" rx="2" fill="url(#gradient)" />
+  </g>
+  
+  <!-- Texto VIZU -->
+  <text x="100" y="165" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-size="28" fill="url(#gradient)" letter-spacing="2">
+    VIZU
+  </text>
+  
+  <!-- Slogan pequeno -->
+  <text x="100" y="182" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="9" fill="#8e8e8e" letter-spacing="1">
+    MOSTRE SEU VISUAL
+  </text>
+</svg>

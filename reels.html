@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#4ECDC4">
+    <title>Vizu - Reels</title>
+    <link rel="stylesheet" href="css/reels.css">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
+</head>
+<body>
+    <header class="header">
+        <div class="header-left">
+            <i class="fas fa-camera" id="createReel"></i>
+        </div>
+        <div class="header-center">
+            <h1>Reels</h1>
+        </div>
+        <div class="header-right">
+            <i class="fas fa-cog" id="settingsButton"></i>
+        </div>
+    </header>
+
+    <div class="reels-container" id="reelsContainer">
+        <div class="loading-reels">
+            <i class="fas fa-spinner fa-pulse"></i>
+            Carregando Reels...
+        </div>
+    </div>
+
+    <!-- Player de Vídeo Modal -->
+    <div id="videoModal" class="modal video-modal">
+        <div class="video-container">
+            <video id="reelVideo" controls autoplay loop>
+                <source src="" type="video/mp4">
+            </video>
+            <div class="video-overlay">
+                <div class="video-user-info">
+                    <img id="videoAvatar" src="" alt="Avatar">
+                    <span id="videoUsername"></span>
+                    <button class="btn-follow-small">Seguir</button>
+                </div>
+                <div class="video-actions">
+                    <button class="video-action-btn" id="videoLikeBtn">
+                        <i class="far fa-heart"></i>
+                        <span id="videoLikes">0</span>
+                    </button>
+                    <button class="video-action-btn" id="videoCommentBtn">
+                        <i class="far fa-comment"></i>
+                        <span id="videoComments">0</span>
+                    </button>
+                    <button class="video-action-btn" id="videoShareBtn">
+                        <i class="far fa-paper-plane"></i>
+                    </button>
+                    <button class="video-action-btn" id="videoMusicBtn">
+                        <i class="fas fa-music"></i>
+                    </button>
+                </div>
+            </div>
+            <span class="close-video">&times;</span>
+        </div>
+    </div>
+
+    <nav class="bottom-nav">
+        <div class="nav-item" data-page="feed">
+            <i class="fas fa-home"></i>
+            <span>Início</span>
+        </div>
+        <div class="nav-item" data-page="search">
+            <i class="fas fa-search"></i>
+            <span>Explorar</span>
+        </div>
+        <div class="nav-item active" data-page="reels">
+            <i class="fas fa-play-circle"></i>
+            <span>Reels</span>
+        </div>
+        <div class="nav-item" data-page="profile">
+            <i class="fas fa-user"></i>
+            <span>Perfil</span>
+        </div>
+    </nav>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/reels.js"></script>
+</body>
+</html>

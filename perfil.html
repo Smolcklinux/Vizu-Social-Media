@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#4ECDC4">
+    <title>Vizu - Perfil</title>
+    <link rel="stylesheet" href="css/perfil.css">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
+</head>
+<body>
+    <header class="header">
+        <div class="header-left">
+            <i class="fas fa-arrow-left" id="backButton"></i>
+        </div>
+        <div class="header-center">
+            <h1 id="profileUsername">Perfil</h1>
+        </div>
+        <div class="header-right">
+            <i class="fas fa-bars" id="menuButton"></i>
+        </div>
+    </header>
+
+    <div class="profile-container">
+        <!-- Cabeçalho do Perfil -->
+        <div class="profile-header">
+            <div class="profile-avatar-container">
+                <img src="assets/images/default-avatar.png" alt="Avatar" class="profile-avatar" id="profileAvatar">
+                <div class="edit-avatar-overlay" id="editAvatarBtn">
+                    <i class="fas fa-camera"></i>
+                </div>
+            </div>
+            
+            <div class="profile-stats">
+                <div class="stat-item">
+                    <span class="stat-number" id="postsCount">0</span>
+                    <span class="stat-label">posts</span>
+                </div>
+                <div class="stat-item" id="followersStat">
+                    <span class="stat-number" id="followersCount">0</span>
+                    <span class="stat-label">seguidores</span>
+                </div>
+                <div class="stat-item" id="followingStat">
+                    <span class="stat-number" id="followingCount">0</span>
+                    <span class="stat-label">seguindo</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-info">
+            <h2 id="profileFullName">Nome do Usuário</h2>
+            <p class="profile-bio" id="profileBio">Bem-vindo ao Vizu! 👋</p>
+            <p class="profile-location" id="profileLocation">
+                <i class="fas fa-map-marker-alt"></i> <span>São Paulo, SP</span>
+            </p>
+            <p class="profile-website" id="profileWebsite">
+                <i class="fas fa-link"></i> <a href="#" target="_blank">vizu.com/user</a>
+            </p>
+        </div>
+
+        <div class="profile-actions">
+            <button class="btn-follow" id="followButton">Seguir</button>
+            <button class="btn-message" id="messageButton">Mensagem</button>
+            <button class="btn-edit" id="editProfileButton">Editar perfil</button>
+        </div>
+
+        <!-- Tabs (Posts / Reels / Marcados) -->
+        <div class="profile-tabs">
+            <div class="tab active" data-tab="posts">
+                <i class="fas fa-th"></i>
+                <span>POSTS</span>
+            </div>
+            <div class="tab" data-tab="reels">
+                <i class="fas fa-play-circle"></i>
+                <span>REELS</span>
+            </div>
+            <div class="tab" data-tab="tagged">
+                <i class="fas fa-tag"></i>
+                <span>MARCADOS</span>
+            </div>
+        </div>
+
+        <!-- Grid de Posts -->
+        <div class="posts-grid" id="postsGrid">
+            <div class="loading-grid">
+                <i class="fas fa-spinner fa-pulse"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Editar Perfil -->
+    <div id="editProfileModal" class="modal">
+        <div class="modal-content edit-profile-modal">
+            <div class="modal-header">
+                <h3>Editar perfil</h3>
+                <span class="close-edit">&times;</span>
+            </div>
+            <form id="editProfileForm">
+                <label>Nome</label>
+                <input type="text" id="editFullName" placeholder="Seu nome">
+                
+                <label>Bio</label>
+                <textarea id="editBio" rows="3" placeholder="Sua biografia"></textarea>
+                
+                <label>Localização</label>
+                <input type="text" id="editLocation" placeholder="Cidade, Estado">
+                
+                <label>Website</label>
+                <input type="url" id="editWebsite" placeholder="https://seusite.com">
+                
+                <button type="submit" class="btn-save">Salvar alterações</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Seguidores/Seguindo -->
+    <div id="followersModal" class="modal">
+        <div class="modal-content followers-modal">
+            <div class="modal-header">
+                <h3 id="followersModalTitle">Seguidores</h3>
+                <span class="close-followers">&times;</span>
+            </div>
+            <div id="followersList" class="followers-list"></div>
+        </div>
+    </div>
+
+    <nav class="bottom-nav">
+        <div class="nav-item" data-page="feed">
+            <i class="fas fa-home"></i>
+            <span>Início</span>
+        </div>
+        <div class="nav-item" data-page="search">
+            <i class="fas fa-search"></i>
+            <span>Pesquisar</span>
+        </div>
+        <div class="nav-item" data-page="reels">
+            <i class="fas fa-play-circle"></i>
+            <span>Reels</span>
+        </div>
+        <div class="nav-item active" data-page="profile">
+            <i class="fas fa-user"></i>
+            <span>Perfil</span>
+        </div>
+    </nav>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/config.js"></script>
+    <script src="js/cloudinary-config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/perfil.js"></script>
+</body>
+</html>

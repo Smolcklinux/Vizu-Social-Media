@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Teste Vizu</title>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: Arial; padding: 20px; background: #f0f0f0; }
+        .test-card { background: white; padding: 20px; border-radius: 10px; margin: 10px 0; }
+        .success { color: green; }
+        .error { color: red; }
+        button { background: #4ECDC4; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>🔧 Teste de Configuração do Vizu</h1>
+    
+    <div class="test-card" id="supabaseTest">
+        <h2>📦 Testando Supabase...</h2>
+        <div id="supabaseStatus">⏳ Conectando...</div>
+    </div>
+    
+    <div class="test-card" id="cloudinaryTest">
+        <h2>☁️ Testando Cloudinary...</h2>
+        <div id="cloudinaryStatus">⏳ Verificando...</div>
+    </div>
+    
+    <div class="test-card">
+        <h2>🔐 Teste de Cadastro</h2>
+        <input type="text" id="testUsername" placeholder="Usuário teste">
+        <input type="email" id="testEmail" placeholder="Email">
+        <input type="password" id="testPassword" placeholder="Senha">
+        <button onclick="testSignup()">Cadastrar Teste</button>
+        <div id="signupResult"></div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/config.js"></script>
+    <script src="js/cloudinary-config.js"></script>
+    <script>
+        // Testar Supabase
+        async function testSupabase() {
+            const statusDiv = document.getElementById('supabaseStatus');
+            try {
+                const { data, error } = await supabaseClient.from('perfis').select('count', { count: 'exact', head: true });
+                if (error) {
+                    statusDiv.innerHTML = `<span class="error">❌ Erro: ${error.message}</span>`;
+                } else {
+                    statusDiv.innerHTML = `<span class="success">✅ Supabase conectado com sucesso!</span>`;
+                }
+            } catch (err) {
+                statusDiv.innerHTML = `<span class="error">❌ Erro: ${err.message}</span>`;
+            }
+        }
+        
+        // Testar Cloudinary
+        function testCloudinary() {
+            const statusDiv = document.getElementById('cloudinaryStatus');
+            if (window.cloudinary && window.cloudinary.cloudName) {
+                statusDiv.innerHTML = `<span class="success">✅ Cloudinary configurado! Cloud: ${window.cloudinary.cloudName}</span>`;
+            } else {
+                statusDiv.innerHTML = `<span class="error">❌ Cloudinary não configurado</span>`;
+            }
+        }
+        
+        // Testar cadastro
+        async function testSignup() {
+            const username = document.getElementById('testUsername').value;
+            const email = document.getElementById('testEmail').value;
+            const password = document.getElementById('testPassword').value;
+            const resultDiv = document.getElementById('signupResult');
+            
+            if (!username || !email || !password) {
+                resultDiv.innerHTML = '<span class="error">Preencha todos os campos!</span>';
+                return;
+            }
+            
+            resultDiv.innerHTML = '⏳ Cadastrando...';
+            
+            const { data, error } = await supabaseClient.auth.signUp({
+                email: email,
+                password: password,
+                options: {
+                    data: { full_name: username, username: username }
+                }
+            });
+            
+            if (error) {
+                resultDiv.innerHTML = `<span class="error">❌ Erro: ${error.message}</span>`;
+            } else {
+                resultDiv.innerHTML = `<span class="success">✅ Cadastro realizado! Verifique seu email para confirmar.</span>`;
+            }
+        }
+        
+        // Executar testes
+        testSupabase();
+        testCloudinary();
+    </script>
+</body>
+</html>
