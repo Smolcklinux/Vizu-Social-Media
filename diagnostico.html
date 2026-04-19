@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Diagnóstico Vizu</title>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: monospace; padding: 20px; background: #1e1e1e; color: #fff; }
+        .ok { color: #4ECDC4; }
+        .error { color: #ED4956; }
+        .test { background: #2a2a2a; padding: 10px; margin: 10px 0; border-radius: 5px; }
+        button { background: #4ECDC4; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-top: 20px; }
+        input { padding: 8px; margin: 5px; border-radius: 5px; border: none; }
+    </style>
+</head>
+<body>
+    <h1>🔧 Diagnóstico do Vizu</h1>
+    <div id="results"></div>
+
+    <!-- SCRIPTS NA ORDEM CORRETA -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/config.js"></script>
+    <script src="js/cloudinary-config.js"></script>
+    
+    <script>
+        const results = document.getElementById('results');
+        
+        function log(message, isError = false) {
+            const div = document.createElement('div');
+            div.className = 'test';
+            div.innerHTML = isError ? `<span class="error">❌ ${message}</span>` : `<span class="ok">✅ ${message}</span>`;
+            results.appendChild(div);
+        }
+
+        async function runDiagnostic() {
+            results.innerHTML = '';
+            log('Iniciando diagnóstico...');
+            
+            // 1. Verificar se supabaseClient existe
+            if (typeof window.supabaseClient !== 'undefined') {
+                log('supabaseClient carregado com sucesso!');
+                
+                // 2. Testar conexão
+                try {
+                    const { data, error } = await window.supabaseClient.from('perfis').select('count', { count: 'exact', head: true });
+                    if (error) {
+                        log(`Supabase: ${error.message}`, true);
+                    } else {
+                        log(`Supabase conectado com sucesso!`);
+                    }
+                } catch(e) {
+                    log(`Erro na consulta: ${e.message}`, true);
+                }
+            } else {
+                log('supabaseClient NÃO foi carregado!', true);
+                log('Verifique se o arquivo js/config.js tem a linha: window.supabaseClient = supabase;', true);
+            }
+            
+            // 3. Testar Cloudinary
+            if (window.cloudinary && window.cloudinary.cloudName) {
+                log(`Cloudinary configurado: ${window.cloudinary.cloudName}`);
+            } else {
+                log('Cloudinary NÃO configurado', true);
+            }
+            
+            log('Diagnóstico finalizado!');
+        }
+        
+        runDiagnostic();
+    </script>
+</body>
+</html>
