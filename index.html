@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vizu - Mostre seu visual ao mundo</title>
+    <title>Vizu - Rede Social</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -13,32 +13,24 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 20px;
         }
-        .login-card {
+        .card {
             background: white;
             max-width: 400px;
-            margin: 20px;
+            width: 100%;
             padding: 40px 30px;
             border-radius: 20px;
             text-align: center;
             box-shadow: 0 15px 35px rgba(0,0,0,0.1);
         }
-        .logo-text {
+        h1 {
             font-size: 48px;
             background: linear-gradient(135deg, #FF6B6B, #4ECDC4, #9B59B6);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         .slogan { color: #666; margin-bottom: 30px; }
-        .status-bar {
-            background: #f0f0f0;
-            padding: 8px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-size: 12px;
-        }
-        .status-online { color: #4ECDC4; font-weight: bold; }
-        .status-offline { color: #ED4956; font-weight: bold; }
         input {
             width: 100%;
             padding: 12px;
@@ -59,7 +51,6 @@
             cursor: pointer;
             margin: 10px 0;
         }
-        .btn-facebook { background: #1877f2; }
         .divider {
             margin: 20px 0;
             position: relative;
@@ -89,7 +80,7 @@
         }
         .modal-content {
             background: white;
-            max-width: 400px;
+            max-width: 350px;
             margin: 100px auto;
             padding: 30px;
             border-radius: 20px;
@@ -99,98 +90,67 @@
             font-size: 28px;
             cursor: pointer;
         }
-        .error-msg { color: #ED4956; font-size: 13px; margin-top: 10px; }
-        .success-msg { color: #4ECDC4; font-size: 13px; margin-top: 10px; }
+        .status {
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        .status-online { background: #d4edda; color: #155724; }
+        .status-offline { background: #f8d7da; color: #721c24; }
+        .status-warning { background: #fff3cd; color: #856404; }
     </style>
 </head>
 <body>
-    <div>
-        <div class="login-card">
-            <h1 class="logo-text">VIZU</h1>
-            <p class="slogan">Mostre seu visual ao mundo</p>
-            
-            <div class="status-bar" id="statusBar">
-                🔌 Conectando ao servidor...
-            </div>
-            
-            <input type="text" id="email" placeholder="Email ou nome de usuário">
-            <input type="password" id="password" placeholder="Senha">
-            <button onclick="fazerLogin()">Entrar</button>
-            
-            <div class="divider"><span>ou</span></div>
-            <button class="btn-facebook" onclick="alert('📘 Login com Facebook em breve!')">Continuar com Facebook</button>
-            
-            <p>Não tem uma conta? <a onclick="abrirModal()">Cadastre-se</a></p>
-            <p><a onclick="alert('🔜 Recuperação de senha em breve!')">Esqueceu a senha?</a></p>
-        </div>
+    <div class="card">
+        <h1>VIZU</h1>
+        <p class="slogan">Mostre seu visual ao mundo</p>
+        
+        <div id="status" class="status status-warning">🔄 Pronto para usar!</div>
+        
+        <input type="text" id="email" placeholder="Email">
+        <input type="password" id="password" placeholder="Senha">
+        <button onclick="fazerLogin()">Entrar</button>
+        
+        <div class="divider"><span>ou</span></div>
+        
+        <p>Não tem conta? <a onclick="abrirModal()">Cadastre-se</a></p>
     </div>
 
-    <!-- Modal de Cadastro -->
     <div id="modal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="fecharModal()">&times;</span>
             <h2>Cadastre-se</h2>
             <input type="text" id="nome" placeholder="Nome completo">
-            <input type="text" id="username" placeholder="Nome de usuário">
+            <input type="text" id="username" placeholder="Usuário">
             <input type="email" id="emailCadastro" placeholder="Email">
-            <input type="password" id="senhaCadastro" placeholder="Senha (mínimo 6 caracteres)">
+            <input type="password" id="senhaCadastro" placeholder="Senha (6+ caracteres)">
             <button onclick="fazerCadastro()">Cadastrar</button>
-            <div id="cadastroResult"></div>
+            <div id="resultado"></div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        // ============================================
-        // CONFIGURAÇÃO DO SUPABASE
-        // ============================================
+        // CONFIGURAÇÃO
         const SUPABASE_URL = 'https://roxxzvsqdigilfjygved.supabase.co';
-        const SUPABASE_ANON_KEY = 'sb_publishable_vHOFMn7VUPl37vNFDIRxnw_G4p2Z8SW';
+        const SUPABASE_ANON_KEY = 'sb_publishable_2_H0O56soizYrDydzKMMJQ_qg0obm8i';
         
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         
-        // ============================================
-        // TESTAR CONEXÃO
-        // ============================================
-        async function testarConexao() {
-            const statusBar = document.getElementById('statusBar');
-            statusBar.innerHTML = '🔄 Verificando conexão...';
-            
-            try {
-                const { data, error } = await supabase.from('perfis').select('count', { count: 'exact', head: true });
-                
-                if (error) {
-                    statusBar.innerHTML = `⚠️ Erro: ${error.message}`;
-                    statusBar.style.background = '#ffe0e0';
-                } else {
-                    statusBar.innerHTML = '✅ Conectado ao Vizu! Pronto para usar.';
-                    statusBar.style.background = '#e0ffe0';
-                }
-            } catch(e) {
-                statusBar.innerHTML = `❌ Erro de conexão: ${e.message}`;
-                statusBar.style.background = '#ffe0e0';
-            }
-        }
-        
-        // ============================================
-        // FUNÇÃO DE LOGIN
-        // ============================================
+        // Login
         async function fazerLogin() {
-            let email = document.getElementById('email').value;
+            const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-            const statusBar = document.getElementById('statusBar');
+            const statusDiv = document.getElementById('status');
             
             if (!email || !password) {
                 alert('Preencha email e senha');
                 return;
             }
             
-            if (!email.includes('@')) {
-                email = email + '@vizu.com';
-            }
-            
-            statusBar.innerHTML = '🔄 Entrando...';
-            statusBar.style.background = '#fff0b0';
+            statusDiv.innerHTML = '🔄 Entrando...';
+            statusDiv.className = 'status status-warning';
             
             const { data, error } = await supabase.auth.signInWithPassword({
                 email: email,
@@ -198,54 +158,48 @@
             });
             
             if (error) {
-                statusBar.innerHTML = `❌ Erro: ${error.message}`;
-                statusBar.style.background = '#ffe0e0';
+                statusDiv.innerHTML = '❌ ' + error.message;
+                statusDiv.className = 'status status-offline';
                 alert('Erro: ' + error.message);
             } else {
-                statusBar.innerHTML = '✅ Login realizado! Redirecionando...';
-                statusBar.style.background = '#e0ffe0';
+                statusDiv.innerHTML = '✅ Login realizado!';
+                statusDiv.className = 'status status-online';
                 alert('Bem-vindo ao Vizu!');
-                // window.location.href = 'feed.html';
             }
         }
         
-        // ============================================
-        // FUNÇÃO DE CADASTRO
-        // ============================================
+        // Cadastro
         async function fazerCadastro() {
             const nome = document.getElementById('nome').value;
             const username = document.getElementById('username').value;
             const email = document.getElementById('emailCadastro').value;
             const password = document.getElementById('senhaCadastro').value;
-            const resultDiv = document.getElementById('cadastroResult');
+            const resultadoDiv = document.getElementById('resultado');
             
             if (!nome || !username || !email || !password) {
-                resultDiv.innerHTML = '<span class="error-msg">❌ Preencha todos os campos</span>';
+                resultadoDiv.innerHTML = '<span style="color:#ED4956">❌ Preencha todos</span>';
                 return;
             }
             
             if (password.length < 6) {
-                resultDiv.innerHTML = '<span class="error-msg">❌ A senha deve ter pelo menos 6 caracteres</span>';
+                resultadoDiv.innerHTML = '<span style="color:#ED4956">❌ Senha: mínimo 6 caracteres</span>';
                 return;
             }
             
-            resultDiv.innerHTML = '<span class="success-msg">🔄 Cadastrando...</span>';
+            resultadoDiv.innerHTML = '<span style="color:#856404">🔄 Cadastrando...</span>';
             
             const { data, error } = await supabase.auth.signUp({
                 email: email,
                 password: password,
                 options: {
-                    data: {
-                        full_name: nome,
-                        username: username
-                    }
+                    data: { full_name: nome, username: username }
                 }
             });
             
             if (error) {
-                resultDiv.innerHTML = `<span class="error-msg">❌ ${error.message}</span>`;
+                resultadoDiv.innerHTML = '<span style="color:#ED4956">❌ ' + error.message + '</span>';
             } else {
-                resultDiv.innerHTML = '<span class="success-msg">✅ Cadastro realizado! Agora faça login.</span>';
+                resultadoDiv.innerHTML = '<span style="color:#155724">✅ Cadastrado! Faça login.</span>';
                 setTimeout(() => {
                     fecharModal();
                     document.getElementById('email').value = email;
@@ -253,25 +207,18 @@
             }
         }
         
-        // ============================================
-        // FUNÇÕES DO MODAL
-        // ============================================
         function abrirModal() {
             document.getElementById('modal').style.display = 'block';
         }
         
         function fecharModal() {
             document.getElementById('modal').style.display = 'none';
-            document.getElementById('cadastroResult').innerHTML = '';
         }
         
         window.onclick = function(e) {
             const modal = document.getElementById('modal');
             if (e.target === modal) fecharModal();
         }
-        
-        // Iniciar
-        testarConexao();
     </script>
 </body>
 </html>
