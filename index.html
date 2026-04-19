@@ -2,86 +2,276 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#4ECDC4">
-    <meta name="description" content="Vizu - Rede social para mostrar seu visual ao mundo">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vizu - Mostre seu visual ao mundo</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .login-card {
+            background: white;
+            max-width: 400px;
+            margin: 20px;
+            padding: 40px 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+        .logo-text {
+            font-size: 48px;
+            background: linear-gradient(135deg, #FF6B6B, #4ECDC4, #9B59B6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .slogan { color: #666; margin-bottom: 30px; }
+        .status-bar {
+            background: #f0f0f0;
+            padding: 8px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 12px;
+        }
+        .status-online { color: #4ECDC4; font-weight: bold; }
+        .status-offline { color: #ED4956; font-weight: bold; }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #4ECDC4, #9B59B6);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+        .btn-facebook { background: #1877f2; }
+        .divider {
+            margin: 20px 0;
+            position: relative;
+            text-align: center;
+        }
+        .divider::before, .divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 45%;
+            height: 1px;
+            background: #ddd;
+        }
+        .divider::before { left: 0; }
+        .divider::after { right: 0; }
+        .divider span { background: white; padding: 0 10px; color: #666; }
+        a { color: #4ECDC4; text-decoration: none; cursor: pointer; }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+        .modal-content {
+            background: white;
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 30px;
+            border-radius: 20px;
+        }
+        .close {
+            float: right;
+            font-size: 28px;
+            cursor: pointer;
+        }
+        .error-msg { color: #ED4956; font-size: 13px; margin-top: 10px; }
+        .success-msg { color: #4ECDC4; font-size: 13px; margin-top: 10px; }
+    </style>
 </head>
 <body>
-    <div class="login-container">
+    <div>
         <div class="login-card">
-            <div class="logo-wrapper">
-                <img src="assets/images/logo.svg" alt="Vizu" class="logo-animated">
-                <h1 class="logo-text">VIZU</h1>
-                <p class="slogan">Mostre seu visual ao mundo</p>
+            <h1 class="logo-text">VIZU</h1>
+            <p class="slogan">Mostre seu visual ao mundo</p>
+            
+            <div class="status-bar" id="statusBar">
+                🔌 Conectando ao servidor...
             </div>
-
-            <form id="loginForm">
-                <div class="input-group">
-                    <input type="text" id="username" placeholder="Telefone, email ou nome de usuário" required autocomplete="username">
-                </div>
-                <div class="input-group">
-                    <input type="password" id="password" placeholder="Senha" required autocomplete="current-password">
-                </div>
-                <button type="submit" class="btn-login">Entrar</button>
-            </form>
-
-            <div class="divider">
-                <span>ou</span>
-            </div>
-
-            <button id="fbLogin" class="btn-facebook">
-                <span>📘</span> Continuar com Facebook
-            </button>
-
-            <a href="#" class="forgot-password" id="forgotPassword">Esqueceu a senha?</a>
-
-            <div class="signup-prompt">
-                <p>Não tem uma conta? <a href="#" id="showSignup">Cadastre-se</a></p>
-            </div>
+            
+            <input type="text" id="email" placeholder="Email ou nome de usuário">
+            <input type="password" id="password" placeholder="Senha">
+            <button onclick="fazerLogin()">Entrar</button>
+            
+            <div class="divider"><span>ou</span></div>
+            <button class="btn-facebook" onclick="alert('📘 Login com Facebook em breve!')">Continuar com Facebook</button>
+            
+            <p>Não tem uma conta? <a onclick="abrirModal()">Cadastre-se</a></p>
+            <p><a onclick="alert('🔜 Recuperação de senha em breve!')">Esqueceu a senha?</a></p>
         </div>
+    </div>
 
-        <!-- Modal de Cadastro -->
-        <div id="signupModal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2>Cadastre-se no Vizu</h2>
-                    <span class="close">&times;</span>
-                </div>
-                <form id="signupForm">
-                    <input type="text" placeholder="Nome completo" required>
-                    <input type="text" placeholder="Nome de usuário" required>
-                    <input type="email" placeholder="Email" required>
-                    <input type="password" placeholder="Senha" required>
-                    <button type="submit" class="btn-signup">Cadastrar</button>
-                </form>
-                <p class="terms">
-                    Ao se cadastrar, você concorda com nossos 
-                    <a href="#">Termos</a>, 
-                    <a href="#">Política de Privacidade</a> e 
-                    <a href="#">Política de Cookies</a>.
-                </p>
-            </div>
-        </div>
-
-        <!-- Modal de Recuperar Senha -->
-        <div id="resetModal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3>Redefinir senha</h3>
-                    <span class="close-reset">&times;</span>
-                </div>
-                <p>Enviaremos um link para seu email redefinir a senha.</p>
-                <input type="email" id="resetEmail" placeholder="Seu email">
-                <button id="sendResetLink" class="btn-login">Enviar link</button>
-            </div>
+    <!-- Modal de Cadastro -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="fecharModal()">&times;</span>
+            <h2>Cadastre-se</h2>
+            <input type="text" id="nome" placeholder="Nome completo">
+            <input type="text" id="username" placeholder="Nome de usuário">
+            <input type="email" id="emailCadastro" placeholder="Email">
+            <input type="password" id="senhaCadastro" placeholder="Senha (mínimo 6 caracteres)">
+            <button onclick="fazerCadastro()">Cadastrar</button>
+            <div id="cadastroResult"></div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/config.js"></script>
-    <script src="js/auth.js"></script>
+    <script>
+        // ============================================
+        // CONFIGURAÇÃO DO SUPABASE
+        // ============================================
+        const SUPABASE_URL = 'https://roxxzvsqdigilfjygved.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_vHOFMn7VUPl37vNFDIRxnw_G4p2Z8SW';
+        
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        
+        // ============================================
+        // TESTAR CONEXÃO
+        // ============================================
+        async function testarConexao() {
+            const statusBar = document.getElementById('statusBar');
+            statusBar.innerHTML = '🔄 Verificando conexão...';
+            
+            try {
+                const { data, error } = await supabase.from('perfis').select('count', { count: 'exact', head: true });
+                
+                if (error) {
+                    statusBar.innerHTML = `⚠️ Erro: ${error.message}`;
+                    statusBar.style.background = '#ffe0e0';
+                } else {
+                    statusBar.innerHTML = '✅ Conectado ao Vizu! Pronto para usar.';
+                    statusBar.style.background = '#e0ffe0';
+                }
+            } catch(e) {
+                statusBar.innerHTML = `❌ Erro de conexão: ${e.message}`;
+                statusBar.style.background = '#ffe0e0';
+            }
+        }
+        
+        // ============================================
+        // FUNÇÃO DE LOGIN
+        // ============================================
+        async function fazerLogin() {
+            let email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const statusBar = document.getElementById('statusBar');
+            
+            if (!email || !password) {
+                alert('Preencha email e senha');
+                return;
+            }
+            
+            if (!email.includes('@')) {
+                email = email + '@vizu.com';
+            }
+            
+            statusBar.innerHTML = '🔄 Entrando...';
+            statusBar.style.background = '#fff0b0';
+            
+            const { data, error } = await supabase.auth.signInWithPassword({
+                email: email,
+                password: password
+            });
+            
+            if (error) {
+                statusBar.innerHTML = `❌ Erro: ${error.message}`;
+                statusBar.style.background = '#ffe0e0';
+                alert('Erro: ' + error.message);
+            } else {
+                statusBar.innerHTML = '✅ Login realizado! Redirecionando...';
+                statusBar.style.background = '#e0ffe0';
+                alert('Bem-vindo ao Vizu!');
+                // window.location.href = 'feed.html';
+            }
+        }
+        
+        // ============================================
+        // FUNÇÃO DE CADASTRO
+        // ============================================
+        async function fazerCadastro() {
+            const nome = document.getElementById('nome').value;
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('emailCadastro').value;
+            const password = document.getElementById('senhaCadastro').value;
+            const resultDiv = document.getElementById('cadastroResult');
+            
+            if (!nome || !username || !email || !password) {
+                resultDiv.innerHTML = '<span class="error-msg">❌ Preencha todos os campos</span>';
+                return;
+            }
+            
+            if (password.length < 6) {
+                resultDiv.innerHTML = '<span class="error-msg">❌ A senha deve ter pelo menos 6 caracteres</span>';
+                return;
+            }
+            
+            resultDiv.innerHTML = '<span class="success-msg">🔄 Cadastrando...</span>';
+            
+            const { data, error } = await supabase.auth.signUp({
+                email: email,
+                password: password,
+                options: {
+                    data: {
+                        full_name: nome,
+                        username: username
+                    }
+                }
+            });
+            
+            if (error) {
+                resultDiv.innerHTML = `<span class="error-msg">❌ ${error.message}</span>`;
+            } else {
+                resultDiv.innerHTML = '<span class="success-msg">✅ Cadastro realizado! Agora faça login.</span>';
+                setTimeout(() => {
+                    fecharModal();
+                    document.getElementById('email').value = email;
+                }, 2000);
+            }
+        }
+        
+        // ============================================
+        // FUNÇÕES DO MODAL
+        // ============================================
+        function abrirModal() {
+            document.getElementById('modal').style.display = 'block';
+        }
+        
+        function fecharModal() {
+            document.getElementById('modal').style.display = 'none';
+            document.getElementById('cadastroResult').innerHTML = '';
+        }
+        
+        window.onclick = function(e) {
+            const modal = document.getElementById('modal');
+            if (e.target === modal) fecharModal();
+        }
+        
+        // Iniciar
+        testarConexao();
+    </script>
 </body>
 </html>
